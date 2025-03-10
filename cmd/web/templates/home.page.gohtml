@@ -1,0 +1,239 @@
+{{template "base" .}}
+
+{{define "title"}}
+    Not Average
+{{end}}
+
+{{define "style"}}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: monospace, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0c000;
+            font-size: 16px;
+        }
+        
+        /* Announcement Bar */
+        .announcement-bar {
+            background-color: #bb0000;
+            color: #f0c000;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .logo {
+            width: 150px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .cart-section {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .cart-btn, .checkout-btn {
+            color: #f0c000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* Navigation */
+        nav {
+            padding: 20px;
+            width: 200px;
+            float: left;
+        }
+        
+        nav ul {
+            list-style-type: none;
+        }
+        
+        nav ul li {
+            margin-bottom: 15px;
+        }
+        
+        nav ul li a {
+            color: #f0c000;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Products Section */
+        .products-container {
+            margin-left: 200px;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center;
+        }
+        
+        .product {
+            margin: 10px;
+            text-align: center;
+            width: 300px;
+        }
+        
+        .product img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        .product-title {
+            color: #f0c000;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .product-price {
+            color: #f0c000;
+            font-weight: bold;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            nav {
+                float: none;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+            
+            .products-container {
+                margin-left: 0;
+            }
+            
+            .product {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+{{end}}
+
+{{define "content"}}
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        OUT OF STOCK ITEMS MAY BE REFUNDED.
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="/api/placeholder/150/70" alt="Brand Logo">
+        </div>
+        <div class="cart-section">
+            <a href="#" class="cart-btn">🛒 Cart (6)</a>
+            <a href="#" class="checkout-btn">Check Out</a>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#">Account</a></li>
+            <li><a href="#">New</a></li>
+            <li><a href="#">T-Shirts</a></li>
+            <li><a href="#">Tops / Jerseys</a></li>
+            <li><a href="#">Sweatshirts</a></li>
+            <li><a href="#">Jackets</a></li>
+            <li><a href="#">Knitwear</a></li>
+            <li><a href="#">Bottoms</a></li>
+            <li><a href="#">Denim</a></li>
+            <li><a href="#">Hats</a></li>
+            <li><a href="#">Bags</a></li>
+            <li><a href="#">Accessories</a></li>
+            <li><a href="#">Womens</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Products -->
+    <div class="products-container">
+        <div class="product">
+            <img src="/api/placeholder/300/320" alt="DA SKYDIVE JACKET [BLACK]">
+            <h3 class="product-title">DA SKYDIVE JACKET [BLACK]</h3>
+            <p class="product-price">£750.00</p>
+        </div>
+        
+        <div class="product">
+            <img src="/api/placeholder/300/320" alt="BOLO LITE+ V2 DOWN JACKET [NAVY]">
+            <h3 class="product-title">BOLO LITE+ V2 DOWN JACKET [NAVY]</h3>
+            <p class="product-price">£300.00</p>
+        </div>
+        
+        <div class="product">
+            <img src="/api/placeholder/300/320" alt="AVALANCHE BOLO DOWN JACKET [BLUE]">
+            <h3 class="product-title">AVALANCHE BOLO DOWN JACKET [BLUE]</h3>
+            <p class="product-price">£250.00</p>
+        </div>
+    </div>
+
+{{end}}
+
+{{define "js"}}
+    document.addEventListener('DOMContentLoaded', function() {
+            const cartBtn = document.querySelector('.cart-btn');
+            const checkoutBtn = document.querySelector('.checkout-btn');
+            
+            cartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Cart functionality would be implemented here');
+            });
+            
+            checkoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Checkout functionality would be implemented here');
+            });
+            
+            // Make products clickable
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                product.addEventListener('click', function() {
+                    const title = this.querySelector('.product-title').textContent;
+                    alert(`You selected: ${title}`);
+                });
+                product.style.cursor = 'pointer';
+            });
+            
+            // Responsive navigation for mobile
+            function handleResponsive() {
+                if (window.innerWidth <= 768) {
+                    document.querySelector('nav').style.display = 'block';
+                }
+            }
+            
+            window.addEventListener('resize', handleResponsive);
+            handleResponsive();
+        });
+{{end}}
