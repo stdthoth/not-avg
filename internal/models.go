@@ -1,4 +1,5 @@
 package internal
 
-type PaystasckTransaction struct {
+type Orders struct {
+	Id string `json:"id"`
 }

@@ -1,12 +1,14 @@
-{{define title}}
+{{template "base" .}}
 
+{{define "title"}}
+    Payment Terminal
 {{end}}
 
 {{define "content"}}
 <h2 class="mt-3 text-center">Paystack Terminal</h2>
 <hr>
 
-<form action="/payment-succeeded" method="post" name="charge_form" class="d-block needs-validation charge-form" autocomplete="off" nonvalidate="">
+<form action="/payment-succeeded" id="payment-form" method="post" name="charge_form" class="d-block needs-validation charge-form" autocomplete="off" nonvalidate="">
     <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
         <input type="text" class="form-control" id="amount" name="amount" required="" autocomplete="amount-new">
@@ -17,11 +19,36 @@
     </div>
     <div class="mb-3">
         <label for="customer_email" class="form-label">Email</label>
-        <input type="text" class="form-control" id="amount" name="email" required="" autocomplete="email-new">
+        <input type="text" class="form-control" id="email" name="email" required="" autocomplete="email-new">
     </div>
+    <button type="submit" class="btn btn-primary">Pay Now</button>
 </form>
 {{end}}
 
 {{define "js"}}
-    <script src="https://js.paystack.co/v2/inline.js"></script>
+    <script>
+        document.getElementById("payment-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById("email").value;
+            const amount = document.getElementById("amount"); 
+            // ₦1000
+
+            // Step 1: Initialize payment from backend
+            const response = await fetch("/initialize-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, amount })
+            });
+
+            const data = await response.json();
+            
+            if (data.status) {
+                // Step 2: Redirect to Paystack payment page
+                window.location.href = data.data.authorization_url;
+            } else {
+                alert("Payment initialization failed");
+            }
+        });
+    </script>
 {{end}}

@@ -202,7 +202,7 @@
 {{end}}
 
 {{define "js"}}
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>document.addEventListener('DOMContentLoaded', function() {
             const cartBtn = document.querySelector('.cart-btn');
             const checkoutBtn = document.querySelector('.checkout-btn');
             
@@ -236,4 +236,5 @@
             window.addEventListener('resize', handleResponsive);
             handleResponsive();
         });
+    </script>
 {{end}}

@@ -8,6 +8,10 @@ import (
 	"os"
 	"text/template"
 	"time"
+
+	"github.com/joho/godotenv"
+
+	"github.com/stdthoth/not-avg/db"
 )
 
 const version = "1.0.0"
@@ -50,9 +54,12 @@ func (app *application) serve() error {
 }
 
 func main() {
+	godotenv.Load()
+
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 4000, "server port to listen on")
+	flag.StringVar(&cfg.db.dsn, "dsn", "root:foot5print@tcp(localhost:3306)/notaverage?parseTime=true&tls=false", "DSN")
 	flag.StringVar(&cfg.env, "env", "development", "application environment {development|production}")
 	flag.StringVar(&cfg.env, "api", "http://localhost:4001", "URl to api")
 
@@ -63,6 +70,8 @@ func main() {
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
+	dbConn, err := db.OpenDB()
 
 	tc := make(map[string]*template.Template)
 

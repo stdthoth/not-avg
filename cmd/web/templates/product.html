@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Avalanche Bolo Down Jacket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: monospace, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0c000;
+            font-size: 16px;
+        }
+        
+        /* Announcement Bar */
+        .announcement-bar {
+            background-color: #bb0000;
+            color: #f0c000;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .logo {
+            width: 150px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .cart-section {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .cart-btn, .checkout-btn {
+            color: #f0c000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        /* Navigation */
+        nav {
+            padding: 20px;
+            width: 200px;
+            float: left;
+        }
+        
+        nav ul {
+            list-style-type: none;
+        }
+        
+        nav ul li {
+            margin-bottom: 15px;
+        }
+        
+        nav ul li a {
+            color: #f0c000;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Product Detail Section */
+        .product-detail {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .product-image {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-title {
+            font-size: 24px;
+            color: #f0c000;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            color: #f0c000;
+            margin-bottom: 20px;
+        }
+        
+        .size-selector {
+            margin-bottom: 20px;
+        }
+        
+        .size-label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .size-dropdown {
+            background-color: #0000aa;
+            color: #f0c000;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-family: monospace;
+            min-width: 150px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        .size-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .add-to-cart-btn {
+            background-color: transparent;
+            color: #f0c000;
+            border: 2px solid #dd0000;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #dd0000;
+        }
+        
+        .product-features {
+            margin-top: 20px;
+        }
+        
+        .product-features ul {
+            list-style-type: none;
+        }
+        
+        .product-features ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .product-features ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #f0c000;
+        }
+        
+        .product-links {
+            margin-top: 30px;
+        }
+        
+        .product-links a {
+            color: #f0c000;
+            text-decoration: underline;
+            display: block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        /* Thumbnail Gallery */
+        .thumbnail-gallery {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        
+        .thumbnail:hover {
+            border-color: #f0c000;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Modal for cart notification */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal-content {
+            background-color: #000;
+            border: 2px solid #f0c000;
+            color: #f0c000;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            color: #f0c000;
+            background: none;
+            border: 1px solid #f0c000;
+            padding: 8px 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        .view-cart-btn {
+            background-color: #dd0000;
+            border-color: #dd0000;
+        }
+        
+        .modal-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            nav {
+                float: none;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+            
+            .product-image, .product-info {
+                flex: 100%;
+                margin-right: 0;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        OUT OF STOCK ITEMS MAY BE REFUNDED.
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="./static/ng-logo.png" alt="Brand Logo">
+        </div>
+        <div class="cart-section">
+            <a href="#" class="cart-btn">🛒 Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="checkout-btn">Check Out</a>
+        </div>
+    </header>
+    
+    <div class="content-container">
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#">Account</a></li>
+                <li><a href="#">New</a></li>
+                <li><a href="#">T-Shirts</a></li>
+                <li><a href="#">Tops / Jerseys</a></li>
+                <li><a href="#">Sweatshirts</a></li>
+                <li><a href="#">Jackets</a></li>
+                <li><a href="#">Knitwear</a></li>
+                <li><a href="#">Bottoms</a></li>
+                <li><a href="#">Denim</a></li>
+                <li><a href="#">Hats</a></li>
+                <li><a href="#">Bags</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Womens</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Product Detail -->
+        <div class="product-detail">
+            <div class="product-image">
+                <img id="main-image" src="/api/placeholder/500/600" alt="AVALANCHE BOLO DOWN JACKET [BLUE]">
+                
+                <div class="thumbnail-gallery">
+                    <div class="thumbnail" data-img="/api/placeholder/500/600">
+                        <img src="/api/placeholder/80/80" alt="Front view">
+                    </div>
+                    <div class="thumbnail" data-img="/api/placeholder/500/600">
+                        <img src="/api/placeholder/80/80" alt="Back view">
+                    </div>
+                    <div class="thumbnail" data-img="/api/placeholder/500/600">
+                        <img src="/api/placeholder/80/80" alt="Side view">
+                    </div>
+                    <div class="thumbnail" data-img="/api/placeholder/500/600">
+                        <img src="/api/placeholder/80/80" alt="Detail view">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-title">AVALANCHE BOLO DOWN JACKET [BLUE]</h1>
+                <p class="product-price">£250.00</p>
+                
+                <div class="size-selector">
+                    <label for="size" class="size-label">Size</label>
+                    <div class="size-dropdown-container">
+                        <select id="size" class="size-dropdown">
+                            <option value="SMALL">SMALL</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="LARGE">LARGE</option>
+                            <option value="X-LARGE">X-LARGE</option>
+                        </select>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                </div>
+                
+                <button id="add-to-cart" class="add-to-cart-btn">ADD TO CART</button>
+                
+                <div class="product-features">
+                    <ul>
+                        <li>DUCK-DOWN FILL [80/20]</li>
+                        <li>100% NYLON RIPSTOP WATER-RESISTANT OUTER.</li>
+                        <li>ELASTICATED CUFFS AND BOTTOM HEM</li>
+                        <li>CHEST AND SIDE POCKETS</li>
+                        <li>MATTE C-STAR SNAPS</li>
+                        <li>EMBROIDERED PATCH LEFT CHEST</li>
+                        <li>REFLECTIVE EMBROIDERED ALLSTARZ LOGO ON BACK</li>
+                        <li>TRUE TO SIZE.</li>
+                    </ul>
+                </div>
+                
+                <div class="product-links">
+                    <a href="#" id="size-guide">SIZE GUIDE</a>
+                    <a href="#" id="shipping-policy">SHIPPING POLICY</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for cart notification -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h2>Added to Cart!</h2>
+            <p id="cart-item-details"></p>
+            <div class="modal-buttons">
+                <button id="view-cart-btn" class="modal-btn view-cart-btn">VIEW CART</button>
+                <button id="continue-shopping-btn" class="modal-btn">CONTINUE SHOPPING</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart functionality
+            let cartCount = 0;
+            let cart = [];
+            const cartCountElement = document.getElementById('cart-count');
+            const addToCartBtn = document.getElementById('add-to-cart');
+            const sizeDropdown = document.getElementById('size');
+            const cartModal = document.getElementById('cart-modal');
+            const cartItemDetails = document.getElementById('cart-item-details');
+            const viewCartBtn = document.getElementById('view-cart-btn');
+            const continueShoppingBtn = document.getElementById('continue-shopping-btn');
+            
+            // Cart functionality
+            addToCartBtn.addEventListener('click', function() {
+                const selectedSize = sizeDropdown.value;
+                const productTitle = document.querySelector('.product-title').textContent;
+                const productPrice = document.querySelector('.product-price').textContent;
+                
+                // Validate selection before adding to cart
+                if (selectedSize) {
+                    // Create cart item
+                    const item = {
+                        id: Date.now(), // Unique identifier
+                        title: productTitle,
+                        size: selectedSize,
+                        price: productPrice,
+                        quantity: 1
+                    };
+                    
+                    // Add to cart array
+                    cart.push(item);
+                    
+                    // Increment cart count
+                    cartCount++;
+                    cartCountElement.textContent = cartCount;
+                    
+                    // Show modal with product details
+                    cartItemDetails.textContent = `${productTitle} - Size: ${selectedSize} - ${productPrice}`;
+                    cartModal.style.display = 'flex';
+                    
+                    // Save cart to localStorage (for persistence)
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    
+                    console.log('Cart updated:', cart);
+                } else {
+                    alert('Please select a size before adding to cart.');
+                }
+            });
+            
+            // View Cart button
+            viewCartBtn.addEventListener('click', function() {
+                // Redirect to cart page (this would normally go to a real cart page)
+                cartModal.style.display = 'none';
+                alert('Redirecting to cart page...');
+                // In a real implementation, you would use:
+                // window.location.href = '/cart.html';
+            });
+            
+            // Continue Shopping button
+            continueShoppingBtn.addEventListener('click', function() {
+                cartModal.style.display = 'none';
+                // In a real implementation, this could either:
+                // 1. Do nothing (just close the modal) if we're already on a product listing
+                // 2. Redirect to the home page with:
+                // window.location.href = '/index.html';
+                alert('Returning to homepage...');
+            });
+            
+            // Click outside to close modal
+            window.addEventListener('click', function(event) {
+                if (event.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+            });
+            
+            // Load cart from localStorage on page load
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                cartCount = cart.length;
+                cartCountElement.textContent = cartCount;
+            }
+            
+            // Image gallery functionality
+            const mainImage = document.getElementById('main-image');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const imgSrc = this.getAttribute('data-img');
+                    mainImage.src = imgSrc;
+                });
+            });
+            
+            // Size guide and shipping policy links
+            document.getElementById('size-guide').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Size Guide information would display here');
+            });
+            
+            document.getElementById('shipping-policy').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Shipping Policy information would display here');
+            });
+            
+            // Make cart link clickable
+            document.querySelector('.cart-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to cart page...');
+                // window.location.href = '/cart.html';
+            });
+            
+            document.querySelector('.checkout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to checkout...');
+                // window.location.href = '/checkout.html';
+            });
+        });
+    </script>
+</body>
+</html>
