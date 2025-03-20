@@ -63,7 +63,7 @@ func main() {
 
 	var cfg config
 
-	flag.IntVar(&cfg.port, "port", 3000, "server port to listen on")
+	flag.IntVar(&cfg.port, "port", 8080, "server port to listen on")
 	flag.StringVar(&cfg.db.dsn, "dsn", "root:foot5print@tcp(localhost:3306)/notaverage?parseTime=true&tls=false", "DSN")
 	flag.StringVar(&cfg.env, "env", "development", "application environment {development|production}")
 	flag.StringVar(&cfg.api, "api", "http://localhost:4001", "URl to api")
