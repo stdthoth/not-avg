@@ -143,6 +143,7 @@
 {{end}}
 
 {{define "content"}}
+{{ $Product:= index .Data "productmodel" }}
     <!-- Announcement Bar -->
     <div class="announcement-bar">
         OUT OF STOCK ITEMS MAY BE REFUNDED.
@@ -151,7 +152,7 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <img src="/api/placeholder/150/70" alt="Brand Logo">
+            <img src="/static/ng-logo.png" alt="Brand Logo">
         </div>
         <div class="cart-section">
             <a href="#" class="cart-btn">🛒 Cart (6)</a>
@@ -162,46 +163,26 @@
     <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="#">Account</a></li>
-            <li><a href="#">New</a></li>
-            <li><a href="#">T-Shirts</a></li>
-            <li><a href="#">Tops / Jerseys</a></li>
-            <li><a href="#">Sweatshirts</a></li>
-            <li><a href="#">Jackets</a></li>
-            <li><a href="#">Knitwear</a></li>
+            <li><a href="#">Headwear</a></li>
+            <li><a href="#">Shirts</a></li>
             <li><a href="#">Bottoms</a></li>
-            <li><a href="#">Denim</a></li>
-            <li><a href="#">Hats</a></li>
-            <li><a href="#">Bags</a></li>
-            <li><a href="#">Accessories</a></li>
-            <li><a href="#">Womens</a></li>
+            <li><a href="#">Tank Tops</a></li>
         </ul>
     </nav>
     
     <!-- Products -->
     <div class="products-container">
         <div class="product">
-            <img src="/api/placeholder/300/320" alt="DA SKYDIVE JACKET [BLACK]">
-            <h3 class="product-title">DA SKYDIVE JACKET [BLACK]</h3>
-            <p class="product-price">£750.00</p>
-        </div>
-        
-        <div class="product">
-            <img src="/api/placeholder/300/320" alt="BOLO LITE+ V2 DOWN JACKET [NAVY]">
-            <h3 class="product-title">BOLO LITE+ V2 DOWN JACKET [NAVY]</h3>
-            <p class="product-price">£300.00</p>
-        </div>
-        
-        <div class="product">
-            <img src="/api/placeholder/300/320" alt="AVALANCHE BOLO DOWN JACKET [BLUE]">
-            <h3 class="product-title">AVALANCHE BOLO DOWN JACKET [BLUE]</h3>
-            <p class="product-price">£250.00</p>
+            <img src="/api/placeholder/300/320" alt="{{.Name}}">
+            <h3 class="product-title">{{ $Product.Name}}</h3>
+            <p class="product-price">{{ $Product.Price}}</p>
         </div>
     </div>
 
 {{end}}
 
 {{define "js"}}
+    
     <script>document.addEventListener('DOMContentLoaded', function() {
             const cartBtn = document.querySelector('.cart-btn');
             const checkoutBtn = document.querySelector('.checkout-btn');

@@ -17,12 +17,23 @@ func (app *application) routes() http.Handler {
 		AllowCredentials: false,
 		MaxAge:           500,
 	}))
+	mux.Use(SessionLoad)
 
-	mux.Get("/", app.HomePage)
-	mux.Get("/paystack-terminal", app.PaystackTerminal)
+	// mux.Get("/paystack-terminal", app.PaystackTerminal)
+	//mux.Get("/cart-view", app.CartView)
+
+	mux.Get("/api/products", app.GetAllProducts)
+	mux.Get("/api/products/{id}", app.GetProductsByID)
+	mux.Get("/api/products/slug/{slug}", app.GetProductsBySlug)
+	mux.Post("/api/save-transaction", app.CreateTransaction)
+	mux.Post("/api/save-order", app.CreateOrder)
+
+	//paystack shit
 	mux.Post("/initialize-payment", app.initializePayment)
 	mux.Get("/verify-payment", app.verifyPayment)
-	mux.Get("/cart-view", app.CartView)
+
+	fileServer := http.FileServer(http.Dir("./static"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	return mux
 }
